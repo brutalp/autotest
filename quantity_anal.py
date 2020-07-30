@@ -2,6 +2,8 @@ from pywinauto.application import Application
 import pywinauto
 import time
 import datetime
+import pyperclip
+import random
 DATE = datetime.datetime.now()
 
 keda = '"C:\\Program Files (x86)\\Bourevestnik\\KEDA\\kedaw.exe" -sim -spec=sim   -hvpsvst=0.2 --devdetflt=bra-135  --measerrordlg'
@@ -22,7 +24,7 @@ time.sleep(1)
 pywinauto.mouse.click(button='left', coords=(82, 90))
 keda_window = app.window(title='Создание аналитической программы')
 # кратность измерения edit1
-keda_window.Edit4.set_text('Тестовая программа ' + str(datetime.datetime.date(DATE)))
+keda_window.Edit4.set_text('Тестовая программа-' + str(random.randrange(0, 50, 1)) + ' ' + str(datetime.datetime.date(DATE)))
 # шифр
 pywinauto.mouse.click(button='left', coords=(876, 417))
 pywinauto.keyboard.send_keys('ХЗ')
@@ -83,6 +85,7 @@ keda_window = app.window(title='Редактирование')
 keda_window.Сохранить.click()
 
 # определяемые элементы
+time.sleep(1)
 pywinauto.mouse.click(button='left', coords=(161, 397))
 # Ti
 pywinauto.mouse.click(button='left', coords=(565, 438))
@@ -96,30 +99,27 @@ keda_window.Сохранить.click()
 # градуировочные образцы
 pywinauto.mouse.click(button='left', coords=(210, 456))
 # добавить
-pywinauto.mouse.click(button='left', coords=(421, 351))
+keda_window = app.window(title_re='Состав градуировочных образцов')
+keda_window.Добавить.click()
+# pywinauto.mouse.click(button='left', coords=(421, 351))
 keda_window = app.window(title='Добавить образцы')
 keda_window.Edit0.set_text('5')
 keda_window.Ок.click()
-# ГО 1
+pyperclip.copy("""ГО-1	0	5	0
+ГО-2	5	0	20
+ГО-3	50	30	0
+ГО-4	70	100	100
+ГО-5	100	70	50
+""")
 pywinauto.mouse.click(button='left', coords=(438, 558))
-pywinauto.keyboard.send_keys('ГО-1')
-# ГО 2
-pywinauto.mouse.click(button='left', coords=(434, 602))
-pywinauto.keyboard.send_keys('ГО-2')
-# ГО 3
-pywinauto.mouse.click(button='left', coords=(439, 640))
-pywinauto.keyboard.send_keys('ГО-3')
-# ГО 4
-pywinauto.mouse.click(button='left', coords=(454, 681))
-pywinauto.keyboard.send_keys('ГО-4')
-# ГО 5
-pywinauto.mouse.click(button='left', coords=(447, 713))
-pywinauto.keyboard.send_keys('ГО-5')
+time.sleep(1)
+pywinauto.keyboard.send_keys("^v")
+# pywinauto.keyboard.send_keys('^v')
+time.sleep(15)
+
 # Сохранить
 keda_window = app.window(title_re='Состав градуировочных образцов')
 keda_window.Сохранить.click()
-# pywinauto.mouse.click(button='left', coords=(1164, 790))
-# keda_window.print_control_identifiers()
 
 # градуировка аналитической программы
 pywinauto.mouse.click(button='left', coords=(249, 644))
@@ -130,8 +130,27 @@ keda_window.Edit0.click()
 pywinauto.keyboard.send_keys('С')
 time.sleep(1)
 keda_window.ToolbarСтарт.click()
-pywinauto.keyboard.send_keys("{VK_LSHIFT down}"
-                             "{VK_LCONTROL down}"
-                             "{F8 down}")
+time.sleep(5)
+# pywinauto.mouse.click(button='left', coords=(196, 80))
+pyperclip.copy("""100	100	100	100	100
+10	10	10	10	10
+20	30	40	50	60
+20	20	20	20	20
+0	0	0	0	0
+60	50	40	30	20
+""")
+pywinauto.keyboard.send_keys('^v')
+# time.sleep(5)
+# pywinauto.keyboard.send_keys("{VK_LSHIFT down}"
+#                              "{VK_LCONTROL down}"
+#                              "{F8 down}"
+#                              "{VK_LSHIFT up}"
+#                              "{VK_LCONTROL up}"
+#                              "{F8 up}"
+#                              )
+time.sleep(5)
 keda_window = app.window(title_re='Ввод интенсивностей')
 keda_window.Применить.click()
+time.sleep(5)
+keda_window = app.window(title_re='Измерение градуировочных образцов')
+keda_window.Сохранить.click()
