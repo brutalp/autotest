@@ -137,5 +137,14 @@ pyperclip.copy("""100	100	100	100	100
 pywinauto.keyboard.send_keys('^v')
 keda_window = app.window(title_re='Ввод интенсивностей')
 keda_window.Применить.click()
-keda_window = app.window(title_re='Измерение градуировочных образцов')
-keda_window.Сохранить.click()
+
+# сохранение результатов где-то
+# pywinauto.keyboard.send_keys('^s')
+# pywinauto.mouse.click(button='left', coords=(506, 94))
+# pyperclip.copy('Здесь нужен путь до папки, куда мы хотим сохранить результаты')
+# pywinauto.keyboard.send_keys('^v')
+# keda_window = app.window(title='Сохранение результатов анализа')
+# keda_window.Сохранить.click()
+
+# keda_window = app.window(title_re='Измерение градуировочных образцов')
+# keda_window.Сохранить.click()
